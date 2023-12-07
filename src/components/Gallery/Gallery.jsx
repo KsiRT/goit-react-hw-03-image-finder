@@ -1,16 +1,33 @@
 import React from 'react';
 import { Card, Cards, Container, LoadBtn } from './GalleryStyled';
+import { fetchImages } from 'components/Services/Api';
 
-export const Gallery = () => {
-  return (
-    <Container>
-      <Cards>
-        <Card>Kartinochka</Card>
-        <Card>Kartinochka</Card>
-        <Card>Kartinochka</Card>
-        <Card>Kartinochka</Card>
-      </Cards>
-      <LoadBtn>Load More</LoadBtn>
-    </Container>
-  );
-};
+export class Gallery extends React.Component {
+  state = {
+    images: [],
+    loading: false,
+  };
+  async componentDidMount() {
+    console.log('ComponentDidMount');
+    const images = await fetchImages();
+    console.log(images);
+    this.setState({ images: [...images] });
+  }
+
+  render() {
+    return (
+      <Container>
+        <Cards>
+          {this.state.images.map(img => {
+            return (
+              <Card key={img.id}>
+                <img src={img.webformatURL} alt="" />
+              </Card>
+            );
+          })}
+        </Cards>
+        <LoadBtn>Load More</LoadBtn>
+      </Container>
+    );
+  }
+}

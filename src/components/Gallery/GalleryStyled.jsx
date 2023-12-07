@@ -11,12 +11,13 @@ export const Cards = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 
 export const Card = styled.li`
-  max-width: 20vw;
-  min-width: 20vw;
+  max-width: 150px;
+  min-width: 120px;
   min-height: 11vw;
 `;
 
