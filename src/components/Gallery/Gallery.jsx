@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Cards, Container, LoadBtn } from './GalleryStyled';
+import { Card, Cards, Container, Image, LoadBtn } from './GalleryStyled';
 import { fetchImages } from 'components/Services/Api';
 
 export class Gallery extends React.Component {
@@ -21,7 +21,7 @@ export class Gallery extends React.Component {
           {this.state.images.map(img => {
             return (
               <Card key={img.id}>
-                <img src={img.webformatURL} alt="" />
+                <Image src={img.webformatURL} alt="" />
               </Card>
             );
           })}
