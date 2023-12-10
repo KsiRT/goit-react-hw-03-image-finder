@@ -1,24 +1,23 @@
 import React from 'react';
 import { Form, Header, Icon, Search, SearchButton } from './FilterStyled';
 
-export class Filter extends React.Component {
-  handleSearchSubmit(e) {
+export const Filter = ({ onSearchSubmit }) => {
+  const onFormSubmit = e => {
     e.preventDefault();
-  }
-  render() {
-    return (
-      <Header>
-        <Form>
-          <Icon size={20} />
-          <Search type="search" placeholder="Search" />
-          <SearchButton
-            onSubmit={() => this.handleSearchSubmit()}
-            type="submit"
-          >
-            Find Images
-          </SearchButton>
-        </Form>
-      </Header>
-    );
-  }
-}
+    console.log(e.currentTarget.elements.query.value);
+    const form = e.currentTarget;
+    const query = form.elements.query.value.trim();
+    console.log(`v forme query:${query}`);
+    onSearchSubmit(query);
+    form.elements.query.value = '';
+  };
+  return (
+    <Header>
+      <Form onSubmit={onFormSubmit}>
+        <Icon size={20} />
+        <Search type="text" placeholder="Search" name="query" />
+        <SearchButton type="submit">Find Images</SearchButton>
+      </Form>
+    </Header>
+  );
+};

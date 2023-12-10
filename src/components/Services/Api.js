@@ -11,10 +11,8 @@ const options = {
 };
 
 export const fetchImages = async params => {
-  const {
-    data: { hits },
-  } = await axios.get('', {
+  const { data } = await axios.get('', {
     params: { ...options, ...params },
   });
-  return hits;
+  return data;
 };
