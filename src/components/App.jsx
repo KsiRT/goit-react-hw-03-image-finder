@@ -10,8 +10,8 @@ export class App extends Component {
   state = {
     images: [],
     query: 'cat',
-    totalHit: 0,
-    page: 1,
+    total: 0,
+    page: 0,
     per_page: 12,
     largeImageURL: '',
     loading: false,
@@ -27,12 +27,15 @@ export class App extends Component {
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page
     ) {
-      const { hits } = await fetchImages({
+      const { hits, totalHits } = await fetchImages({
         q: query,
         page,
         per_page,
       });
-      this.setState(prev => ({ images: [...prev.images, ...hits] }));
+      this.setState(prev => ({
+        images: [...prev.images, ...hits],
+        total: totalHits,
+      }));
     }
   }
   handleLoadMore() {
@@ -48,7 +51,7 @@ export class App extends Component {
       return;
     }
     if (searchQuery !== this.state.query) {
-      this.setState(prev => ({ query: searchQuery, images: [] }));
+      this.setState(prev => ({ query: searchQuery, images: [], page: 1 }));
       Notify.success('Look, we found something!)');
     }
   };
