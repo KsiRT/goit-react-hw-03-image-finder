@@ -15,7 +15,7 @@ export const Filter = ({ onSearchSubmit }) => {
     <Header>
       <Form onSubmit={onFormSubmit}>
         <Icon size={20} />
-        <Search type="text" placeholder="Search" name="query" />
+        <Search type="search" placeholder="Search" name="query" />
         <SearchButton type="submit">Find Images</SearchButton>
       </Form>
     </Header>
