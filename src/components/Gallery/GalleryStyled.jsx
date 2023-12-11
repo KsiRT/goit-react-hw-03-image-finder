@@ -11,14 +11,10 @@ export const Container = styled.div`
 export const Cards = styled.ul`
   list-style: none;
   display: flex;
-  /* flex-direction: row; */
-  /* flex-wrap: wrap; */
-  /* justify-content: space-between; */
-  /* justify-content: space-evenly; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   margin: 0 auto;
-  padding: 30px 0 0 0;
+  padding: 30px 0 30px 0;
   gap: 40px;
   max-width: 90%;
 `;
@@ -44,7 +40,7 @@ export const LoadBtn = styled.button`
   border-radius: 6px;
   font-size: 20px;
   height: 35px;
-  width: 130px;
+  min-width: 130px;
 
   &:hover,
   &:focus {
@@ -52,4 +48,12 @@ export const LoadBtn = styled.button`
     /* background-color: #1e4f50; */
     opacity: 1;
   }
+`;
+
+export const NoResults = styled.p`
+  font-family: inherit;
+  font-size: 30px;
+  font-weight: 700;
+  display: block;
+  margin: 50px 40vw;
 `;

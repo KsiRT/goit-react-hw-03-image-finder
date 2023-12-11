@@ -10,7 +10,7 @@ export class App extends Component {
   state = {
     images: [],
     query: 'cat',
-    total: 0,
+    total: null,
     page: 0,
     per_page: 12,
     largeImageURL: '',
@@ -23,19 +23,27 @@ export class App extends Component {
   async componentDidUpdate(_, prevState) {
     const { query, page, per_page } = this.state;
     console.log('Update');
+
     if (
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page
     ) {
-      const { hits, totalHits } = await fetchImages({
-        q: query,
-        page,
-        per_page,
-      });
-      this.setState(prev => ({
-        images: [...prev.images, ...hits],
-        total: totalHits,
-      }));
+      try {
+        this.setState({ loading: true });
+        const { hits, totalHits } = await fetchImages({
+          q: query,
+          page,
+          per_page,
+        });
+        this.setState(prev => ({
+          images: [...prev.images, ...hits],
+          total: totalHits,
+        }));
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        this.setState({ loading: false });
+      }
     }
   }
   handleLoadMore() {
@@ -52,7 +60,7 @@ export class App extends Component {
     }
     if (searchQuery !== this.state.query) {
       this.setState(prev => ({ query: searchQuery, images: [], page: 1 }));
-      Notify.success('Look, we found something!)');
+      Notify.success('Looking fot it🧐');
     }
   };
 
@@ -74,6 +82,7 @@ export class App extends Component {
           loadMore={() => this.handleLoadMore()}
           imageClick={this.handleOpenImage}
           query={this.state.query}
+          total={this.state.total}
         />
         {this.state.isModalOpen ? (
           <Modal
