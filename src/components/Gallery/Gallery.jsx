@@ -14,6 +14,7 @@ export const Gallery = ({
   imageClick,
   query,
   total,
+  loading,
 }) => {
   return (
     <Container>
@@ -31,7 +32,7 @@ export const Gallery = ({
         </Cards>
       )}
 
-      {fetchedImgs.length !== total ? (
+      {fetchedImgs.length !== total && !loading ? (
         <LoadBtn onClick={() => loadMore()} type="button">
           {query !== 'cat' ? 'Load More' : 'Show me some cats 😍'}
         </LoadBtn>

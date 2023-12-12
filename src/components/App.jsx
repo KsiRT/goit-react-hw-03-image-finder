@@ -5,6 +5,7 @@ import { Wrapper } from './GlobalStyles';
 import { fetchImages } from './Services/Api';
 import { Notify } from 'notiflix';
 import { Modal } from './Modal/Modal';
+import { Triangle } from 'react-loader-spinner';
 
 export class App extends Component {
   state = {
@@ -29,7 +30,7 @@ export class App extends Component {
       prevState.page !== this.state.page
     ) {
       try {
-        this.setState({ loading: true });
+        this.setState({ loading: true, asfadfadf: true });
         const { hits, totalHits } = await fetchImages({
           q: query,
           page,
@@ -74,16 +75,30 @@ export class App extends Component {
     this.setState(prevState => ({ isModalOpen: !prevState.isModalOpen }));
   };
   render() {
+    const { loading } = this.state;
     return (
       <Wrapper>
         <Filter onSearchSubmit={this.handleSearch} />
+
         <Gallery
           fetchedImgs={this.state.images}
           loadMore={() => this.handleLoadMore()}
           imageClick={this.handleOpenImage}
           query={this.state.query}
           total={this.state.total}
+          loading={this.state.loading}
         />
+        {loading && (
+          <Triangle
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+        )}
         {this.state.isModalOpen ? (
           <Modal
             imageURL={this.state.largeImageURL}
