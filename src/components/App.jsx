@@ -19,12 +19,9 @@ export class App extends Component {
     loading: false,
     isModalOpen: false,
   };
-  componentDidMount() {
-    console.log('Page reloaded');
-  }
+
   async componentDidUpdate(_, prevState) {
     const { query, page, per_page } = this.state;
-    console.log('Update');
 
     if (
       prevState.query !== this.state.query ||
@@ -42,7 +39,7 @@ export class App extends Component {
           total: totalHits,
         }));
       } catch (e) {
-        console.log(e.message);
+        Notify.error(e.message);
       } finally {
         this.setState({ loading: false });
       }
@@ -53,9 +50,6 @@ export class App extends Component {
   }
 
   handleSearch = searchQuery => {
-    console.log(`запрос на пошук ${searchQuery}`);
-
-    console.log(this.state.query);
     if (searchQuery === '') {
       Notify.info('You need to type something in order to find 🧐');
       return;
