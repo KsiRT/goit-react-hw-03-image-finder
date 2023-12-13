@@ -4,10 +4,10 @@ import { Form, Header, Icon, Search, SearchButton } from './FilterStyled';
 export const Filter = ({ onSearchSubmit }) => {
   const onFormSubmit = e => {
     e.preventDefault();
-    console.log(e.currentTarget.elements.query.value);
+    // console.log(e.currentTarget.elements.query.value);
     const form = e.currentTarget;
     const query = form.elements.query.value.trim();
-    console.log(`v forme query:${query}`);
+    // console.log(`v forme query:${query}`);
     onSearchSubmit(query);
     form.elements.query.value = '';
   };

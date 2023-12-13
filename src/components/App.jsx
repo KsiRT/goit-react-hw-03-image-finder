@@ -6,6 +6,7 @@ import { fetchImages } from './Services/Api';
 import { Notify } from 'notiflix';
 import { Modal } from './Modal/Modal';
 import { Triangle } from 'react-loader-spinner';
+import { LoadBtn, NoResults } from './Gallery/GalleryStyled';
 
 export class App extends Component {
   state = {
@@ -52,7 +53,7 @@ export class App extends Component {
   }
 
   handleSearch = searchQuery => {
-    console.log(`запрос на поиск ${searchQuery}`);
+    console.log(`запрос на пошук ${searchQuery}`);
 
     console.log(this.state.query);
     if (searchQuery === '') {
@@ -79,15 +80,23 @@ export class App extends Component {
     return (
       <Wrapper>
         <Filter onSearchSubmit={this.handleSearch} />
-
-        <Gallery
-          fetchedImgs={this.state.images}
-          loadMore={() => this.handleLoadMore()}
-          imageClick={this.handleOpenImage}
-          query={this.state.query}
-          total={this.state.total}
-          loading={this.state.loading}
-        />
+        {this.state.total === 0 ? (
+          <NoResults>There is nothing found 😥</NoResults>
+        ) : (
+          <>
+            <Gallery
+              fetchedImgs={this.state.images}
+              imageClick={this.handleOpenImage}
+            />
+            {this.state.images.length !== this.state.total && !loading ? (
+              <LoadBtn onClick={() => this.handleLoadMore()} type="button">
+                {this.state.query !== 'cat'
+                  ? 'Load More'
+                  : 'Show me some cats 😍'}
+              </LoadBtn>
+            ) : null}
+          </>
+        )}
         {loading && (
           <Triangle
             height="80"
